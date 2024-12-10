@@ -1,3 +1,5 @@
+//ui/sidebar.tsx
+
 "use client";
 import { cn } from "@/lib/utils";
 import Link, { LinkProps } from "next/link";
@@ -172,6 +174,7 @@ export const SidebarLink = ({
         "flex items-center justify-start gap-2  group/sidebar py-2",
         className
       )}
+      target="_blank"
       {...props}
     >
       {link.icon}
