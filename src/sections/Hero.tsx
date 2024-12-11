@@ -73,12 +73,13 @@ export default function Hero() {
     <BackgroundBeamsWithCollision>
       <section
         ref={heroRef}
-        className="min-h-screen w-full h-full flex items-center justify-center bg-gradient-to-b from-white to-gray-100"
+        className="min-h-screen w-full h-full flex items-center justify-center sm:pb-20 bg-gradient-to-b from-white to-gray-100 py-20"
       >
-        <div className="container grid grid-cols-1 md:grid-cols-12 items-center gap-8">
+        <div className="container grid grid-cols-1 md:grid-cols-12 items-center gap-8 px-4 sm:px-6 lg:px-8">
+          {/* Hero Image */}
           <div className="h-full w-full col-span-12 md:col-span-5 flex justify-center md:justify-start relative hero-image">
             <CardContainer>
-              <div className="w-[300px] md:w-[400px] lg:w-[500px] aspect-square relative overflow-hidden">
+              <div className="w-[250px] sm:w-[300px] md:w-[400px] lg:w-[500px] aspect-square relative overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full translate-y-[14%] scale-90" />
                 <Image
                   src="/images/Pratham-NoBG.png"
@@ -91,18 +92,19 @@ export default function Hero() {
             </CardContainer>
           </div>
 
+          {/* Hero Content */}
           <div className="col-span-12 md:col-span-7 space-y-6 text-center md:text-left">
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-gray-800 hero-title">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-gray-800 hero-title">
               Pratham Satani
             </h1>
-            <h2 className="text-xl sm:text-2xl md:text-3xl text-gray-600 hero-subtitle">
+            <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl text-gray-600 hero-subtitle">
               <FlipWords
                 words={[
-                  "Aspiring Machine Learning Engineer",
+                  "Machine Learning Engineer",
                   "AI Enthusiast",
                   "Creative Developer",
                   "Data Scientist",
-                  "Algo Expert"
+                  "Algo Expert",
                 ]}
               />
             </h2>
@@ -112,85 +114,41 @@ export default function Hero() {
                 "I am passionate about leveraging machine learning and AI to create innovative solutions that address real-world challenges. By combining advanced algorithms with creative thinking, I develop intelligent systems that are impactful, scalable, and user-centric. My goal is to push the boundaries of AI, transforming raw data into actionable insights and seamless experiences."
               }
               duration={0.5}
-              className="text-gray-700 text-sm text-justify sm:text-base hero-description"
+              className="text-gray-700 text-sm sm:text-base hero-description"
             />
 
+            {/* Action Buttons */}
             <div className="flex flex-wrap justify-center md:justify-start gap-4 hero-buttons">
-              <Modal>
-                <ModalTrigger className="bg-black dark:bg-white dark:text-black text-white flex outline justify-center group/modal-btn">
-                  <Link
-                    href="/"
-                    target="_blank"
-                    className="group-hover/modal-btn:translate-x-40 text-center transition duration-500"
-                  >
-                    ML Projects
-                  </Link>
-                  <Link
-                    href="/"
-                    target="_blank"
-                    className="-translate-x-40 group-hover/modal-btn:translate-x-0 flex items-center justify-center absolute inset-0 transition duration-500 text-white z-20"
-                  >
-                    🧠
-                  </Link>
-                </ModalTrigger>
-              </Modal>
-              <Modal>
-                <ModalTrigger className="bg-black dark:bg-white dark:text-black text-white flex outline justify-center group/modal-btn">
-                  <Link
-                    href="/"
-                    target="_blank"
-                    className="group-hover/modal-btn:translate-x-40 text-center transition duration-500"
-                  >
-                    Tech Stack
-                  </Link>
-                  <Link
-                    href="/"
-                    target="_blank"
-                    className="-translate-x-40 group-hover/modal-btn:translate-x-0 flex items-center justify-center absolute inset-0 transition duration-500 text-white z-20"
-                  >
-                    💻
-                  </Link>
-                </ModalTrigger>
-              </Modal>
-              <Modal>
-                <ModalTrigger className="bg-black dark:bg-white dark:text-black text-white flex outline justify-center group/modal-btn">
-                  <Link
-                    href="/"
-                    target="_blank"
-                    className="group-hover/modal-btn:translate-x-40 text-center transition duration-500"
-                  >
-                    Research
-                  </Link>
-                  <Link
-                    href="/"
-                    target="_blank"
-                    className="-translate-x-40 group-hover/modal-btn:translate-x-0 flex items-center justify-center absolute inset-0 transition duration-500 text-white z-20"
-                  >
-                    📝
-                  </Link>
-                </ModalTrigger>
-              </Modal>
-              <Modal>
-                <ModalTrigger className="bg-white dark:bg-white dark:text-black  text-black flex outline outline-1 justify-center group/modal-btn">
-                  <Link
-                    href="/docs/Pratham Satani.pdf"
-                    target="_blank"
-                    className="group-hover/modal-btn:translate-x-40 text-center transition duration-500"
-                  >
-                    Download Resume
-                  </Link>
-                  <Link
-                    href="/docs/Pratham Satani.pdf"
-                    target="_blank"
-                    className="-translate-x-40 group-hover/modal-btn:translate-x-0 flex items-center justify-center absolute inset-0 transition duration-500 text-white z-20"
-                  >
-                    📑
-                  </Link>
-                </ModalTrigger>
-              </Modal>
+              {["ML Projects", "Tech Stack", "Research", "Download Resume"].map(
+                (label, idx) => (
+                  <Modal key={idx}>
+                    <ModalTrigger className="bg-black dark:bg-white dark:text-black text-white flex outline justify-center group/modal-btn">
+                      <Link
+                        href="/"
+                        target="_blank"
+                        className="group-hover/modal-btn:translate-x-40 text-center transition duration-500"
+                      >
+                        {label}
+                      </Link>
+                      <Link
+                        href="/"
+                        target="_blank"
+                        className="-translate-x-40 group-hover/modal-btn:translate-x-0 flex items-center justify-center absolute inset-0 transition duration-500 text-white z-20"
+                      >
+                        {label === "Download Resume"
+                          ? "📑"
+                          : idx === 0
+                          ? "🧠"
+                          : "💻"}
+                      </Link>
+                    </ModalTrigger>
+                  </Modal>
+                )
+              )}
             </div>
 
-            <div className="flex justify-center md:justify-start space-x-10 hero-socials">
+            {/* Social Links */}
+            <div className="flex justify-center md:justify-start space-x-6 sm:space-x-10 hero-socials">
               <SocialLink
                 href="https://github.com/prathamsatani"
                 icon={siGithub}
