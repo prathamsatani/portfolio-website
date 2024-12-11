@@ -102,6 +102,7 @@ export default function Hero() {
                   "AI Enthusiast",
                   "Creative Developer",
                   "Data Scientist",
+                  "Algo Expert"
                 ]}
               />
             </h2>
@@ -189,7 +190,7 @@ export default function Hero() {
               </Modal>
             </div>
 
-            <div className="flex justify-center md:justify-start space-x-4 hero-socials">
+            <div className="flex justify-center md:justify-start space-x-10 hero-socials">
               <SocialLink
                 href="https://github.com/prathamsatani"
                 icon={siGithub}
