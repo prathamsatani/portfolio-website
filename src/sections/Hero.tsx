@@ -98,7 +98,7 @@ export default function Hero() {
             <h2 className="text-xl sm:text-2xl md:text-3xl text-gray-600 hero-subtitle">
               <FlipWords
                 words={[
-                  "Machine Learning Engineer",
+                  "Aspiring Machine Learning Engineer",
                   "AI Enthusiast",
                   "Creative Developer",
                   "Data Scientist",
