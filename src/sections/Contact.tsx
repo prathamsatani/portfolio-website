@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { Boxes } from "@/components/ui/background-boxes";
 
 // Enhanced form validation schema
 const formSchema = z.object({
@@ -77,128 +78,133 @@ export default function ContactForm() {
   };
 
   return (
-    <div className="bg-gray-100 py-20">
-      <div className="max-w-7xl mx-auto px-4 md:px-8 lg:px-0">
-        <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-gray-800">
-          📱 Contact
-        </h1>
+    <div className="relative bg-gray-100 py-20 overflow-hidden">
+      <div className="absolute inset-0 z-0">
+        <Boxes className="opacity-30"/>
       </div>
-      <div className="text-center">
-        <div className="max-w-7xl mx-auto pt-10 px-4 md:px-8 lg:px-0">
-          <h1 className="text-3xl sm:text-5xl md:text-2xl text-gray-800">
-            📞 +91 93276 04988
+      <div className="relative z-10">
+        <div className="max-w-7xl mx-auto px-4 md:px-8 lg:px-0">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-gray-800">
+            📱 Contact
           </h1>
         </div>
-        <div className="max-w-7xl mx-auto pt-5 px-4 md:px-8 lg:px-0">
-          <h1 className="text-3xl sm:text-5xl md:text-2xl text-gray-800">
-            📧 iamprathamsatani2002@gmail.com
-          </h1>
+        <div className="text-center">
+          <div className="max-w-7xl mx-auto pt-10 px-4 md:px-8 lg:px-0">
+            <h1 className="text-3xl sm:text-5xl md:text-2xl text-gray-800">
+              📞 +91 93276 04988
+            </h1>
+          </div>
+          <div className="max-w-7xl mx-auto pt-5 px-4 md:px-8 lg:px-0">
+            <h1 className="text-3xl sm:text-5xl md:text-2xl text-gray-800">
+              📧 iamprathamsatani2002@gmail.com
+            </h1>
+          </div>
+          <div className="max-w-7xl mx-auto pt-5 px-4 md:px-8 lg:px-0">
+            <h1 className="text-3xl sm:text-5xl md:text-2xl text-gray-800">
+              🌏 Bharuch, Gujarat, India
+            </h1>
+          </div>
         </div>
-        <div className="max-w-7xl mx-auto pt-5 px-4 md:px-8 lg:px-0">
-          <h1 className="text-3xl sm:text-5xl md:text-2xl text-gray-800">
-            🌏 Bharuch, Gujarat, India
-          </h1>
-        </div>
-      </div>
-      <div className="max-w-md mx-auto p-6 bg-white shadow-md rounded-lg mt-16">
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-            <div className="grid grid-cols-2 gap-4">
+        <div className="max-w-md mx-auto p-6 bg-white shadow-md rounded-lg mt-16 relative z-10">
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+              <div className="grid grid-cols-2 gap-4">
+                <FormField
+                  control={form.control}
+                  name="firstName"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>First Name</FormLabel>
+                      <FormControl>
+                        <Input placeholder="John" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="lastName"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Last Name</FormLabel>
+                      <FormControl>
+                        <Input placeholder="Doe" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+
               <FormField
                 control={form.control}
-                name="firstName"
+                name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>First Name</FormLabel>
+                    <FormLabel>Email</FormLabel>
                     <FormControl>
-                      <Input placeholder="John" {...field} />
+                      <Input
+                        type="email"
+                        placeholder="someone@example.com"
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
+
               <FormField
                 control={form.control}
-                name="lastName"
+                name="subject"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Last Name</FormLabel>
+                    <FormLabel>Subject</FormLabel>
                     <FormControl>
-                      <Input placeholder="Doe" {...field} />
+                      <Input placeholder="Purpose of your message" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
-            </div>
 
-            <FormField
-              control={form.control}
-              name="email"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Email</FormLabel>
-                  <FormControl>
-                    <Input
-                      type="email"
-                      placeholder="someone@example.com"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
+              <FormField
+                control={form.control}
+                name="message"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Message</FormLabel>
+                    <FormControl>
+                      <Textarea
+                        placeholder="Write your message here..."
+                        className="min-h-[120px]"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              {form.formState.errors.root && (
+                <div className="text-destructive text-sm">
+                  {form.formState.errors.root.message}
+                </div>
               )}
-            />
 
-            <FormField
-              control={form.control}
-              name="subject"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Subject</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Purpose of your message" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
+              {submitSuccess && (
+                <div className="text-green-600 text-sm">
+                  Message sent successfully!
+                </div>
               )}
-            />
 
-            <FormField
-              control={form.control}
-              name="message"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Message</FormLabel>
-                  <FormControl>
-                    <Textarea
-                      placeholder="Write your message here..."
-                      className="min-h-[120px]"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            {form.formState.errors.root && (
-              <div className="text-destructive text-sm">
-                {form.formState.errors.root.message}
-              </div>
-            )}
-
-            {submitSuccess && (
-              <div className="text-green-600 text-sm">
-                Message sent successfully!
-              </div>
-            )}
-
-            <Button type="submit" className="w-full" disabled={isSubmitting}>
-              {isSubmitting ? "Sending..." : "Send Message"}
-            </Button>
-          </form>
-        </Form>
+              <Button type="submit" className="w-full" disabled={isSubmitting}>
+                {isSubmitting ? "Sending..." : "Send Message"}
+              </Button>
+            </form>
+          </Form>
+        </div>
       </div>
     </div>
   );
