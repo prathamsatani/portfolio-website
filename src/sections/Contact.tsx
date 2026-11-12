@@ -3,209 +3,85 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { useState } from "react";
 
-import { Button } from "@/components/ui/button";
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Boxes } from "@/components/ui/background-boxes";
+const EMAIL = "iamprathamsatani2002@gmail.com";
 
-// Enhanced form validation schema
-const formSchema = z.object({
-  firstName: z.string().min(2, {
-    message: "First name must be at least 2 characters.",
-  }),
-  lastName: z.string().min(2, {
-    message: "Last name must be at least 2 characters.",
-  }),
-  email: z.string().email({
-    message: "Please enter a valid email address.",
-  }),
-  subject: z.string().min(3, {
-    message: "Subject must be at least 3 characters.",
-  }),
-  message: z.string().min(10, {
-    message: "Message must be at least 10 characters long.",
-  }),
+const schema = z.object({
+  name: z.string().trim().min(2, "Please enter your name."),
+  email: z.string().trim().email("Please enter a valid email."),
+  message: z.string().trim().min(10, "Message should be at least 10 characters."),
 });
+type Values = z.infer<typeof schema>;
 
-export default function ContactForm() {
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitSuccess, setSubmitSuccess] = useState(false);
+const fields = [
+  { name: "name", label: "Name", type: "text", autoComplete: "name" },
+  { name: "email", label: "Email", type: "email", autoComplete: "email" },
+  { name: "message", label: "Message" },
+] as const;
 
-  // Initialize form with Zod schema
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      firstName: "",
-      lastName: "",
-      email: "",
-      subject: "",
-      message: "",
-    },
-  });
+export default function Contact() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<Values>({ resolver: zodResolver(schema) });
 
-  // Handle form submission
-  const onSubmit = async (data: z.infer<typeof formSchema>) => {
-    setIsSubmitting(true);
-    setSubmitSuccess(false);
-
-    try {
-      // TODO: Replace with your actual form submission logic (e.g., API call)
-      await new Promise((resolve) => setTimeout(resolve, 1500)); // Simulate API call
-
-      console.log("Form submitted:", data);
-      setSubmitSuccess(true);
-      form.reset(); // Clear form after successful submission
-    } catch (error) {
-      console.error("Submission error:", error);
-      form.setError("root", {
-        type: "manual",
-        message: "Failed to submit. Please try again.",
-      });
-    } finally {
-      setIsSubmitting(false);
-    }
+  // No backend: hand the message to the visitor's mail client.
+  const onSubmit = ({ name, email, message }: Values) => {
+    const subject = encodeURIComponent(`Portfolio enquiry from ${name}`);
+    const body = encodeURIComponent(`${message}\n\n— ${name} <${email}>`);
+    window.location.href = `mailto:${EMAIL}?subject=${subject}&body=${body}`;
   };
 
   return (
-    <div className="relative bg-gray-100 py-20 overflow-hidden">
-      <div className="absolute inset-0 z-0">
-        <Boxes className="opacity-30"/>
-      </div>
-      <div className="relative z-10">
-        <div className="max-w-7xl mx-auto px-4 md:px-8 lg:px-0">
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-gray-800">
-            📱 Contact
-          </h1>
+    <section id="contact" className="section wrap" aria-labelledby="contact-title">
+      <p className="label text-accent">04 — Contact</p>
+      <div className="mt-8 grid gap-16 lg:grid-cols-[1fr_500px]">
+        <div>
+          <h2 id="contact-title" className="font-serif text-display-l">
+            Have a problem worth modelling? Let&apos;s talk.
+          </h2>
+          <a
+            href={`mailto:${EMAIL}`}
+            className="mt-8 inline-block break-all text-body-l text-accent underline underline-offset-4"
+          >
+            {EMAIL}
+          </a>
+          <p className="label mt-6 text-muted">Boston, MA · Open to ML / AI engineering roles</p>
         </div>
-        <div className="text-center">
-          <div className="max-w-7xl mx-auto pt-10 px-4 md:px-8 lg:px-0">
-            <h1 className="text-3xl sm:text-5xl md:text-2xl text-gray-800">
-              📞 +91 93276 04988
-            </h1>
-          </div>
-          <div className="max-w-7xl mx-auto pt-5 px-4 md:px-8 lg:px-0">
-            <h1 className="text-3xl sm:text-5xl md:text-2xl text-gray-800">
-              📧 iamprathamsatani2002@gmail.com
-            </h1>
-          </div>
-          <div className="max-w-7xl mx-auto pt-5 px-4 md:px-8 lg:px-0">
-            <h1 className="text-3xl sm:text-5xl md:text-2xl text-gray-800">
-              🌏 Bharuch, Gujarat, India
-            </h1>
-          </div>
-        </div>
-        <div className="max-w-md mx-auto p-6 bg-white shadow-md rounded-lg mt-16 relative z-10">
-          <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-              <div className="grid grid-cols-2 gap-4">
-                <FormField
-                  control={form.control}
-                  name="firstName"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>First Name</FormLabel>
-                      <FormControl>
-                        <Input placeholder="John" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="lastName"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Last Name</FormLabel>
-                      <FormControl>
-                        <Input placeholder="Doe" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+        <form onSubmit={handleSubmit(onSubmit)} noValidate className="flex flex-col gap-8">
+          {fields.map((f) => {
+            const error = errors[f.name]?.message;
+            const props = {
+              id: f.name,
+              className: "field",
+              "aria-invalid": !!error,
+              "aria-describedby": error ? `${f.name}-error` : undefined,
+              ...register(f.name),
+            };
+            return (
+              <div key={f.name}>
+                <label htmlFor={f.name} className="label text-muted">
+                  {f.label}
+                </label>
+                {"type" in f ? (
+                  <input type={f.type} autoComplete={f.autoComplete} {...props} />
+                ) : (
+                  <textarea rows={4} {...props} className="field resize-y" />
+                )}
+                {error && (
+                  <p id={`${f.name}-error`} className="mt-2 text-body-s text-accent">
+                    {error}
+                  </p>
+                )}
               </div>
-
-              <FormField
-                control={form.control}
-                name="email"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Email</FormLabel>
-                    <FormControl>
-                      <Input
-                        type="email"
-                        placeholder="someone@example.com"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="subject"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Subject</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Purpose of your message" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="message"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Message</FormLabel>
-                    <FormControl>
-                      <Textarea
-                        placeholder="Write your message here..."
-                        className="min-h-[120px]"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              {form.formState.errors.root && (
-                <div className="text-destructive text-sm">
-                  {form.formState.errors.root.message}
-                </div>
-              )}
-
-              {submitSuccess && (
-                <div className="text-green-600 text-sm">
-                  Message sent successfully!
-                </div>
-              )}
-
-              <Button type="submit" className="w-full" disabled={isSubmitting}>
-                {isSubmitting ? "Sending..." : "Send Message"}
-              </Button>
-            </form>
-          </Form>
-        </div>
+            );
+          })}
+          <button type="submit" className="btn-primary self-start">
+            Send message →
+          </button>
+        </form>
       </div>
-    </div>
+    </section>
   );
 }

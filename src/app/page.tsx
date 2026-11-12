@@ -1,19 +1,25 @@
-import Education from "@/sections/Education";
-import Contact from "@/sections/Contact";
-import Hero from "@/sections/Hero";
 import Navbar from "@/sections/Navbar";
-import { TechStack } from "@/sections/TechStack";
-import Project from "@/sections/Project";
+import Hero from "@/sections/Hero";
+import About from "@/sections/About";
+import Work from "@/sections/Work";
+import Experience from "@/sections/Experience";
+import Toolkit from "@/sections/Toolkit";
+import Contact from "@/sections/Contact";
+import Footer from "@/sections/Footer";
 
 export default function Home() {
   return (
     <>
       <Navbar />
-      <Hero />
-      <Project />
-      <TechStack />
-      <Education />
-      <Contact/>
+      <main>
+        <Hero />
+        <About />
+        <Work />
+        <Experience />
+        <Toolkit />
+        <Contact />
+      </main>
+      <Footer />
     </>
   );
 }
