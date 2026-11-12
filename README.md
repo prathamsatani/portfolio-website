@@ -1,36 +1,38 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Pratham Satani — Portfolio
 
-## Getting Started
+Personal site for Pratham Satani, ML engineer in Boston: [pratham-satani.vercel.app](https://pratham-satani.vercel.app)
 
-First, run the development server:
+Built with Next.js 15 (App Router), React 18, TypeScript and Tailwind CSS. It's one page in a minimal editorial style, with light and dark mode that follow the OS setting.
+
+## Run locally
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev     # http://localhost:3000
+npm run lint
+npm run build
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Where things live
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+| What | Where |
+|---|---|
+| Page sections (content is inlined at the top of each file) | `src/sections/*.tsx` |
+| Section order | `src/app/page.tsx` |
+| Colour tokens (light + dark) and shared classes | `src/app/globals.css` |
+| Tailwind theme (colours, fonts, type scale) | `tailwind.config.ts` |
+| Fonts, page metadata | `src/app/layout.tsx` |
+| Social preview image, robots, sitemap | `src/app/opengraph-image.tsx`, `robots.ts`, `sitemap.ts` |
+| Résumé and portrait | `public/docs/`, `public/images/` |
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+To update the résumé, replace `public/docs/Pratham_Satani_MLE.pdf` and keep the same filename.
 
-## Learn More
+The contact form has no backend. Submitting it opens the visitor's email client with a prefilled message.
 
-To learn more about Next.js, take a look at the following resources:
+## Design
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+The Figma design is at [Portfolio Redesign — Minimal Editorial](https://www.figma.com/design/5GxbyjBmuwvvZCuw8XOeuS). The type is Instrument Serif for display, Inter for body and JetBrains Mono for labels.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Deploy
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Deployed on Vercel. Pushing to `main` deploys to production.
